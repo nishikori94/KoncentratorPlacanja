@@ -1,6 +1,6 @@
-insert into tip_placanja(id, naziv, url) values (1, 'paypal', 'http://localhost:9091/paypal/make/payment');
-insert into tip_placanja(id, naziv, url) values (2, 'kartica', 'http://localhost:9091/placanje/generisiZahtevZaUplatu');
-insert into tip_placanja(id, naziv, url) values (3, 'bitcoin', 'http://localhost:9091/bitcoin/napraviPorudzbinuBTC');
+insert into tip_placanja(id, naziv, url, img_path) values (1, 'PayPal', 'http://localhost:9091/paypal/make/payment', 'assets/images/paypal-brands.svg');
+insert into tip_placanja(id, naziv, url, img_path) values (2, 'Kartica', 'http://localhost:9091/placanje/generisiZahtevZaUplatu', 'assets/images/credit-card-regular.svg');
+insert into tip_placanja(id, naziv, url, img_path) values (3, 'Bitcoin', 'http://localhost:9091/bitcoin/napraviPorudzbinuBTC', 'assets/images/btc-brands.svg');
 
 insert into casopis(merchant_id, merchant_password) values ('11', 'aaaa');
 insert into casopis(merchant_id, merchant_password) values ('22', 'bbbb');

@@ -43,6 +43,8 @@ public class TipPlacanja {
 	@Column
 	private String url;
 
+	@Column
+	private String imgPath;
 
 
 	public TipPlacanja() {
@@ -50,11 +52,22 @@ public class TipPlacanja {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TipPlacanja(Long id, String naziv, String url) {
+	public TipPlacanja(Long id, String naziv, String url, String imgPath) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
 		this.url = url;
+		this.imgPath = imgPath;
+	}
+	
+	
+
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
 	}
 
 	public Long getId() {
