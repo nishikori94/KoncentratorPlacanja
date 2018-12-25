@@ -34,16 +34,28 @@ public class Casopis {
 	@OneToMany(mappedBy = "casopis", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CasopisTipPlacanja> tipoviPlacanja = new ArrayList<>();
 
+	@Column
+	private String successUrl;
+
+	@Column
+	private String failedUrl;
+
+	@Column
+	private String errorUrl;
+
 	public Casopis() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public Casopis(String merchantId, String merchantPassword, Racun racun) {
+	public Casopis(String merchantId, String merchantPassword, Racun racun, String successUrl, String failedUrl,
+			String errorUrl) {
 		super();
 		this.merchantId = merchantId;
 		this.merchantPassword = merchantPassword;
 		this.racun = racun;
+		this.successUrl = successUrl;
+		this.failedUrl = failedUrl;
+		this.errorUrl = errorUrl;
 	}
 
 	public String getMerchantId() {
@@ -70,7 +82,6 @@ public class Casopis {
 		this.racun = racun;
 	}
 
-
 	public Long getId() {
 		return id;
 	}
@@ -87,5 +98,28 @@ public class Casopis {
 		this.tipoviPlacanja = tipoviPlacanja;
 	}
 
-	
+	public String getSuccessUrl() {
+		return successUrl;
+	}
+
+	public void setSuccessUrl(String successUrl) {
+		this.successUrl = successUrl;
+	}
+
+	public String getFailedUrl() {
+		return failedUrl;
+	}
+
+	public void setFailedUrl(String failedUrl) {
+		this.failedUrl = failedUrl;
+	}
+
+	public String getErrorUrl() {
+		return errorUrl;
+	}
+
+	public void setErrorUrl(String errorUrl) {
+		this.errorUrl = errorUrl;
+	}
+
 }

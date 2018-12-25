@@ -9,8 +9,8 @@ public interface UplataService {
 
 	void kreirajUplatu(Porudzbina p);
 
-	void zavrsiUplatu(Long uplataId);
+	String zavrsiUplatu(Long uplataId);
 
-	void otkaziUplatu(Long uplataId);
+	String otkaziUplatu(Long uplataId);
 
 }

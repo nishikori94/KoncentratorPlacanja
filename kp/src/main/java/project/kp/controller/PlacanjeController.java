@@ -82,17 +82,19 @@ public class PlacanjeController {
 	}
 
 	@PostMapping(path = "/zavrsiUplatu/{uplataId}")
-	public void zavrsiUplatu(@RequestBody RezultatTransakcije rezultatTransakcije,
+	public String zavrsiUplatu(@RequestBody RezultatTransakcije rezultatTransakcije,
 			@PathVariable("uplataId") Long uplataId) {
-		uplataService.zavrsiUplatu(uplataId);
+		String url = uplataService.zavrsiUplatu(uplataId);
 		System.out.println(rezultatTransakcije);
+		return "{\"url\":\""+ url + "\"}";
 	}
 
 	@PostMapping(path = "/otkaziUplatu/{uplataId}")
-	public void otkaziUplatu(@RequestBody RezultatTransakcije rezultatTransakcije,
+	public String otkaziUplatu(@RequestBody RezultatTransakcije rezultatTransakcije,
 			@PathVariable("uplataId") Long uplataId) {
-		uplataService.otkaziUplatu(uplataId);
+		String url = uplataService.otkaziUplatu(uplataId);
 		System.out.println(rezultatTransakcije);
+		return "{\"url\":\""+ url + "\"}";
 	}
 
 }

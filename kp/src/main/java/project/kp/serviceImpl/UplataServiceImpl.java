@@ -35,21 +35,24 @@ public class UplataServiceImpl implements UplataService {
 		Banka banka = casopis.getRacun().getBanka();
 		Uplata u = new Uplata(porudzbina.getAmount(), porudzbina.getMerchantOrderId(),
 				porudzbina.getMerchantTimestamp(), porudzbina.getMerchantId(),
-				casopisRep.findByMerchantId(porudzbina.getMerchantId()).getMerchantPassword(), "success url",
-				"failedUrl", "errorUrl", StatusUplate.NA_OBRADI, banka.port, porudzbina.getValuta());
+				casopisRep.findByMerchantId(porudzbina.getMerchantId()).getMerchantPassword(), casopis.getSuccessUrl(), casopis.getFailedUrl(), casopis.getErrorUrl(), StatusUplate.NA_OBRADI, banka.port, porudzbina.getValuta());
 		uplataRep.save(u);
 	}
 
 	@Override
-	public void zavrsiUplatu(Long uplataId) {
+	public String zavrsiUplatu(Long uplataId) {
 		// TODO Auto-generated method stub
-		uplataRep.findById(uplataId).get().setStatusUplate(StatusUplate.UPLACENO);
+		Uplata uplata = uplataRep.findById(uplataId).get();
+		uplata.setStatusUplate(StatusUplate.UPLACENO);
+		return uplata.getSuccessUrl();
 	}
 
 	@Override
-	public void otkaziUplatu(Long uplataId) {
+	public String otkaziUplatu(Long uplataId) {
 		// TODO Auto-generated method stub
-		uplataRep.findById(uplataId).get().setStatusUplate(StatusUplate.ODBIJENO);
+		Uplata uplata = uplataRep.findById(uplataId).get();
+		uplata.setStatusUplate(StatusUplate.ODBIJENO);
+		return uplata.getFailedUrl();
 	}
 
 }
