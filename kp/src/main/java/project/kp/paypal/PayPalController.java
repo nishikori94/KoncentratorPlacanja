@@ -16,19 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:4200")
 public class PayPalController {
 
-	 private final PayPalClient payPalClient;
-	    @Autowired
-	    PayPalController(PayPalClient payPalClient){
-	        this.payPalClient = payPalClient;
-	    }
+	private final PayPalClient payPalClient;
 
-	    @RequestMapping(method = RequestMethod.GET, path = "/make/payment/{merchantOrderId}", produces = "application/json")
-	    public Map<String, Object> makePayment(@PathVariable("merchantOrderId") Long merchantOrderId){
-	    	return payPalClient.createPayment(merchantOrderId);
-	    }
-	    
-	    @RequestMapping(method = RequestMethod.POST, path = "/complete/payment", produces = "application/json")
-	    public Map<String, Object> completePayment(HttpServletRequest request){
-	        return payPalClient.completePayment(request);
-	    }
+	@Autowired
+	PayPalController(PayPalClient payPalClient) {
+		this.payPalClient = payPalClient;
+	}
+
+	@RequestMapping(method = RequestMethod.GET, path = "/make/payment/{merchantOrderId}", produces = "application/json")
+	public Map<String, Object> makePayment(@PathVariable("merchantOrderId") Long merchantOrderId) {
+		return payPalClient.createPayment(merchantOrderId);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/complete/payment", produces = "application/json")
+	public Map<String, Object> completePayment(HttpServletRequest request) {
+		return payPalClient.completePayment(request);
+	}
 }

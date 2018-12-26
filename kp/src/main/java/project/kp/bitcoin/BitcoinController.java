@@ -35,15 +35,15 @@ public class BitcoinController {
 		PorudzbinaBTC pbtc = new PorudzbinaBTC();
 
 		pbtc.setOrder_id(uplata.getMerchantOrderId().toString());
-		
-		String exchangeUrl = "https://api.coingate.com/v2/rates/merchant/"+uplata.getValuta()+"/BTC";
+
+		String exchangeUrl = "https://api.coingate.com/v2/rates/merchant/" + uplata.getValuta() + "/BTC";
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<Double> d = restTemplate.getForEntity(exchangeUrl, double.class);
 		double btcPrice = Double.parseDouble(uplata.getAmount()) * d.getBody().doubleValue();
-		
+
 		pbtc.setPrice_amount(btcPrice);
-		pbtc.setCancel_url("http://localhost:4200");
-		pbtc.setSuccess_url("http://localhost:4200");
+		pbtc.setCancel_url(uplata.getFailedUrl());
+		pbtc.setSuccess_url(uplata.getSuccessUrl());
 		pbtc.setToken("ssssssVw4VbDTLRfQBb9C7bixEtQeXzQPJENVy5r");
 
 		String url = "https://api-sandbox.coingate.com/v2/orders";
@@ -51,8 +51,6 @@ public class BitcoinController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Token _8G5f_BCufzL2wc9y5qJTyhz1cZF7rfHwYq895ax");
 
-		
-		
 		ResponseEntity<PorudzbinaBTC> responseEntity = new RestTemplate().exchange(url, HttpMethod.POST,
 				new HttpEntity<PorudzbinaBTC>(pbtc, headers), PorudzbinaBTC.class);
 
