@@ -50,8 +50,7 @@ public class Uplata {
 	}
 
 	public Uplata(String amount, Long merchantOrderId, String merchantTimestamp, String merchantId,
-			String merchantPassword, String successUrl, String failedUrl, String errorUrl, StatusUplate statusUplate,
-			String bankaPort, String valuta) {
+			String merchantPassword, String successUrl, String failedUrl, String errorUrl, StatusUplate statusUplate,String valuta) {
 		super();
 		this.amount = amount;
 		this.merchantOrderId = merchantOrderId;
@@ -62,7 +61,6 @@ public class Uplata {
 		this.failedUrl = failedUrl;
 		this.errorUrl = errorUrl;
 		this.statusUplate = statusUplate;
-		this.bankaPort = bankaPort;
 		this.valuta = valuta;
 	}
 
@@ -146,12 +144,5 @@ public class Uplata {
 		this.statusUplate = statusUplate;
 	}
 
-	public String getBankaPort() {
-		return bankaPort;
-	}
-
-	public void setBankaPort(String bankaPort) {
-		this.bankaPort = bankaPort;
-	}
 
 }

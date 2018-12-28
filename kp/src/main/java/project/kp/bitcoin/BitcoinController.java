@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import project.kp.model.StatusUplate;
 import project.kp.model.Uplata;
 import project.kp.repository.UplataRepository;
 
@@ -30,6 +31,7 @@ public class BitcoinController {
 	@RequestMapping(method = RequestMethod.GET, path = "/napraviPorudzbinuBTC/{merchantOrderId}", produces = "application/json")
 	public String napraviPorudzbinuBTC(@PathVariable("merchantOrderId") Long merchantOrderId) {
 		Uplata uplata = uplataRep.findByMerchantOrderId(merchantOrderId);
+		uplata.setStatusUplate(StatusUplate.NA_OBRADI);
 		Map<String, Object> response = new HashMap<String, Object>();
 
 		PorudzbinaBTC pbtc = new PorudzbinaBTC();
@@ -56,9 +58,10 @@ public class BitcoinController {
 
 		if (responseEntity.getStatusCode() == HttpStatus.UNPROCESSABLE_ENTITY) {
 			response.put("status", "error");
+			uplata.setStatusUplate(StatusUplate.ODBIJENO);
 			return "{\"url\":\"" + response.get("redirect_url") + "\"}";
 		}
-
+		uplata.setStatusUplate(StatusUplate.UPLACENO);
 		response.put("status", "success");
 		response.put("redirect_url", responseEntity.getBody().getPayment_url());
 

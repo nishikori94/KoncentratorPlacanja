@@ -24,6 +24,7 @@ import com.paypal.api.payments.Transaction;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 
+import project.kp.model.StatusUplate;
 import project.kp.model.Uplata;
 import project.kp.repository.UplataRepository;
 
@@ -42,17 +43,17 @@ public class PayPalClient {
 		Amount amount = new Amount();
 
 		String exchangeUrl = "http://free.currencyconverterapi.com/api/v5/convert?q=" + uplata.getValuta()
-				+ "_EUR&compact=ultra";
+				+ "_USD&compact=ultra";
 		RestTemplate restTemplate = new RestTemplate();
 		String exchangeRate = restTemplate.getForObject(exchangeUrl, String.class);
 		JSONObject jsonObj = new JSONObject(exchangeRate);
-		String exchangeRateString = jsonObj.get(uplata.getValuta() + "_EUR").toString();
-		double eurAmount = Double.parseDouble(exchangeRateString) * Double.parseDouble(uplata.getAmount());
+		String exchangeRateString = jsonObj.get(uplata.getValuta() + "_USD").toString();
+		double usdAmount = Double.parseDouble(exchangeRateString) * Double.parseDouble(uplata.getAmount());
 
-		BigDecimal bd = new BigDecimal(eurAmount);
+		BigDecimal bd = new BigDecimal(usdAmount);
 		bd = bd.setScale(2, RoundingMode.HALF_UP);
 
-		amount.setCurrency("EUR");
+		amount.setCurrency("USD");
 		amount.setTotal(bd.toString());
 
 		Transaction transaction = new Transaction();
@@ -88,9 +89,11 @@ public class PayPalClient {
 				}
 				response.put("status", "success");
 				response.put("url", redirectUrl);
+				uplata.setStatusUplate(StatusUplate.UPLACENO);
 			}
 		} catch (PayPalRESTException e) {
 			System.out.println("Error happened during payment creation!");
+			uplata.setStatusUplate(StatusUplate.ODBIJENO);
 		}
 		return response;
 	}
