@@ -26,13 +26,15 @@ public class UplataServiceImpl implements UplataService {
 
 	@Autowired
 	private RezultatTransakcijeRepository rezultatTransakcijeRep;
+	
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@Override
 	public String posaljiZahtevZaUplatu(Uplata u) {
 		Casopis casopis = casopisRep.findByMerchantId(u.getMerchantId());
 		Banka banka = casopis.getRacun().getBanka();
-		final String putanja = "http://localhost:" + banka.getPort() + "/placanje/generisiUrl";
-		RestTemplate restTemplate = new RestTemplate();
+		final String putanja = "https://localhost:" + banka.getPort() + "/placanje/generisiUrl";
 		return restTemplate.postForObject(putanja, u, String.class);
 	}
 
