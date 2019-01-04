@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/paypal")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4200")
 public class PayPalController {
 
 	private final PayPalClient payPalClient;
@@ -29,7 +29,7 @@ public class PayPalController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "/complete/payment", produces = "application/json")
-	public Map<String, Object> completePayment(HttpServletRequest request) {
-		return payPalClient.completePayment(request);
+	public void completePayment(HttpServletRequest request) {
+		payPalClient.completePayment(request);
 	}
 }

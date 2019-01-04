@@ -22,7 +22,7 @@ import project.kp.repository.UplataRepository;
 
 @RestController
 @RequestMapping("/bitcoin")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4200")
 public class BitcoinController {
 
 	@Autowired

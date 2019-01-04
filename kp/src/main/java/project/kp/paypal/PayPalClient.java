@@ -42,15 +42,14 @@ public class PayPalClient {
 		Uplata uplata = uplataRep.findByMerchantOrderId(merchantOrderId);
 		Amount amount = new Amount();
 
-		String exchangeUrl = "http://free.currencyconverterapi.com/api/v5/convert?q=" + uplata.getValuta()
-				+ "_USD&compact=ultra";
+		String exchangeUrl = "https://bankersalgo.com/apicalc2/5c2f51b4a1f7f/87d380fe40f3d0a7bf9fd780da534427/"+uplata.getValuta()+"/USD/"+uplata.getAmount();
+		
 		RestTemplate restTemplate = new RestTemplate();
 		String exchangeRate = restTemplate.getForObject(exchangeUrl, String.class);
 		JSONObject jsonObj = new JSONObject(exchangeRate);
-		String exchangeRateString = jsonObj.get(uplata.getValuta() + "_USD").toString();
-		double usdAmount = Double.parseDouble(exchangeRateString) * Double.parseDouble(uplata.getAmount());
+		String exchangeRateString = jsonObj.get("result").toString();
 
-		BigDecimal bd = new BigDecimal(usdAmount);
+		BigDecimal bd = new BigDecimal(Double.parseDouble(exchangeRateString));
 		bd = bd.setScale(2, RoundingMode.HALF_UP);
 
 		amount.setCurrency("USD");
@@ -94,11 +93,13 @@ public class PayPalClient {
 		} catch (PayPalRESTException e) {
 			System.out.println("Error happened during payment creation!");
 			uplata.setStatusUplate(StatusUplate.ODBIJENO);
+			response.put("status", "failerd");
+			response.put("url", uplata.getFailedUrl());
 		}
 		return response;
 	}
 
-	public Map<String, Object> completePayment(HttpServletRequest req) {
+	public void completePayment(HttpServletRequest req) {
 		Map<String, Object> response = new HashMap<String, Object>();
 		Payment payment = new Payment();
 		payment.setId(req.getParameter("paymentId"));
@@ -115,6 +116,5 @@ public class PayPalClient {
 			// System.err.println(e.getDetails());
 		}
 		System.out.println(response.toString());
-		return response;
 	}
 }
