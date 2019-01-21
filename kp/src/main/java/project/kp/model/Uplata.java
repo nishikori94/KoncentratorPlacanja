@@ -1,5 +1,7 @@
 package project.kp.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +25,7 @@ public class Uplata {
 	private Long merchantOrderId;
 
 	@Column
-	private String merchantTimestamp;
+	private Date merchantTimestamp;
 
 	@Column
 	private String merchantId;
@@ -46,11 +48,18 @@ public class Uplata {
 	@Column
 	private String bankaPort;
 
+	@Column
+	private String tipPlacanja;
+	
+	@Column
+	private String btcId;
+
 	public Uplata() {
 	}
 
-	public Uplata(String amount, Long merchantOrderId, String merchantTimestamp, String merchantId,
-			String merchantPassword, String successUrl, String failedUrl, String errorUrl, StatusUplate statusUplate,String valuta) {
+	public Uplata(String amount, Long merchantOrderId, Date merchantTimestamp, String merchantId,
+			String merchantPassword, String successUrl, String failedUrl, String errorUrl, StatusUplate statusUplate,
+			String valuta, String tipPlacanja) {
 		super();
 		this.amount = amount;
 		this.merchantOrderId = merchantOrderId;
@@ -62,6 +71,15 @@ public class Uplata {
 		this.errorUrl = errorUrl;
 		this.statusUplate = statusUplate;
 		this.valuta = valuta;
+		this.tipPlacanja = tipPlacanja;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getAmount() {
@@ -88,11 +106,11 @@ public class Uplata {
 		this.merchantOrderId = merchantOrderId;
 	}
 
-	public String getMerchantTimestamp() {
+	public Date getMerchantTimestamp() {
 		return merchantTimestamp;
 	}
 
-	public void setMerchantTimestamp(String merchantTimestamp) {
+	public void setMerchantTimestamp(Date merchantTimestamp) {
 		this.merchantTimestamp = merchantTimestamp;
 	}
 
@@ -144,5 +162,20 @@ public class Uplata {
 		this.statusUplate = statusUplate;
 	}
 
+	public String getTipPlacanja() {
+		return tipPlacanja;
+	}
+
+	public void setTipPlacanja(String tipPlacanja) {
+		this.tipPlacanja = tipPlacanja;
+	}
+
+	public String getBtcId() {
+		return btcId;
+	}
+
+	public void setBtcId(String btcId) {
+		this.btcId = btcId;
+	}
 
 }

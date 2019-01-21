@@ -2,6 +2,7 @@ package project.kp.bitcoin;
 
 public class PorudzbinaBTC {
 
+	private String id;
 	private String order_id;
 	private double price_amount;
 	private String price_currency = "BTC";
@@ -36,6 +37,14 @@ public class PorudzbinaBTC {
 	}
 
 	
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getOrder_id() {
 		return order_id;

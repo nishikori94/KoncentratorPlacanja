@@ -1,5 +1,7 @@
 package project.kp.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,12 +22,12 @@ public class Porudzbina {
 
 	@Column
 	private String amount;
-	
+
 	@Column
 	private String valuta;
 
 	@Column
-	private String merchantTimestamp;
+	private Date merchantTimestamp;
 
 	@Column
 	private String tipPlacanja;
@@ -36,7 +38,7 @@ public class Porudzbina {
 	}
 
 	public Porudzbina(Long merchantOrderId, String merchantId, String merchantPassword, String amount,
-			String merchantTimestamp, String tipPlacanja, String valuta) {
+			Date merchantTimestamp, String tipPlacanja, String valuta) {
 		super();
 		this.merchantOrderId = merchantOrderId;
 		this.merchantId = merchantId;
@@ -79,11 +81,11 @@ public class Porudzbina {
 		this.amount = amount;
 	}
 
-	public String getMerchantTimestamp() {
+	public Date getMerchantTimestamp() {
 		return merchantTimestamp;
 	}
 
-	public void setMerchantTimestamp(String merchantTimestamp) {
+	public void setMerchantTimestamp(Date merchantTimestamp) {
 		this.merchantTimestamp = merchantTimestamp;
 	}
 
@@ -103,5 +105,4 @@ public class Porudzbina {
 		this.valuta = valuta;
 	}
 
-	
 }

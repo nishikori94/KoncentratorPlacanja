@@ -34,6 +34,7 @@ public class UplataServiceImpl implements UplataService {
 	public String posaljiZahtevZaUplatu(Uplata u) {
 		Casopis casopis = casopisRep.findByMerchantId(u.getMerchantId());
 		Banka banka = casopis.getRacun().getBanka();
+		u.setTipPlacanja("Kartica");
 		final String putanja = "https://localhost:" + banka.getPort() + "/placanje/generisiUrl";
 		return restTemplate.postForObject(putanja, u, String.class);
 	}
@@ -44,7 +45,7 @@ public class UplataServiceImpl implements UplataService {
 		Uplata u = new Uplata(porudzbina.getAmount(), porudzbina.getMerchantOrderId(),
 				porudzbina.getMerchantTimestamp(), porudzbina.getMerchantId(),
 				casopisRep.findByMerchantId(porudzbina.getMerchantId()).getMerchantPassword(), casopis.getSuccessUrl(),
-				casopis.getFailedUrl(), casopis.getErrorUrl(), StatusUplate.NA_OBRADI, porudzbina.getValuta());
+				casopis.getFailedUrl(), casopis.getErrorUrl(), StatusUplate.NA_OBRADI, porudzbina.getValuta(), "");
 		uplataRep.save(u);
 	}
 
