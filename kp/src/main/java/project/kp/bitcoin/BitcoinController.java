@@ -91,7 +91,7 @@ public class BitcoinController {
 		long t= date.getTimeInMillis();
 		Date trenutnoMinus=new Date(t - (1 * ONE_MINUTE_IN_MILLIS));
 		
-		List<Uplata> uplate = uplataRep.findAllByMerchantTimestampLessThanEqualAndMerchantTimestampGreaterThanEqualAndTipPlacanja(trenutno, trenutnoMinus, "Bitcoin");
+		List<Uplata> uplate = uplataRep.findAllByMerchantTimestampLessThanEqualAndMerchantTimestampGreaterThanEqualAndTipPlacanjaAndStatusUplate(trenutno, trenutnoMinus, "Bitcoin", StatusUplate.NA_OBRADI);
 		for(int i=0; i<uplate.size(); i++) {
 			String url = "https://api-sandbox.coingate.com/v2/orders/"+uplate.get(i).getBtcId();
 			HttpHeaders headers = new HttpHeaders();
@@ -99,7 +99,7 @@ public class BitcoinController {
 			ParameterizedTypeReference<Map<String, Object>> typeRef = new ParameterizedTypeReference<Map<String, Object>>() {};
 			ResponseEntity<Map<String, Object>> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(headers), typeRef);
 			JSONObject responseJSON = new JSONObject(response.getBody());
-			if(responseJSON.get("status") == "Paid" && (uplate.get(i).getStatusUplate().equals(StatusUplate.NA_OBRADI) || uplate.get(i).getStatusUplate().equals(StatusUplate.ODBIJENO))){
+			if(responseJSON.get("status") == "Paid"){
 				uplate.get(i).setStatusUplate(StatusUplate.UPLACENO);
 				uplataRep.save(uplate.get(i));
 			}

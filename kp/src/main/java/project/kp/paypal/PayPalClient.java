@@ -17,6 +17,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -139,6 +140,7 @@ public class PayPalClient {
 				response.put("payment", createdPayment);
 				Uplata uplata = uplataRep.findByBtcId(createdPayment.getId());
 				uplata.setStatusUplate(StatusUplate.UPLACENO);
+				uplataRep.save(uplata);
 			}
 		} catch (PayPalRESTException e) {
 			// System.err.println(e.getDetails());
@@ -147,6 +149,7 @@ public class PayPalClient {
 
 	}
 
+	@Scheduled(cron = "0 * * * * *")
 	public void sinhronizacijaPayPal() {
 		final long ONE_MINUTE_IN_MILLIS = 60000;// millisecs
 		Date trenutno = new Date();
@@ -154,42 +157,23 @@ public class PayPalClient {
 		long t = date.getTimeInMillis();
 		Date trenutnoMinus = new Date(t - (10 * ONE_MINUTE_IN_MILLIS));
 		List<Uplata> uplate = uplataRep
-				.findAllByMerchantTimestampLessThanEqualAndMerchantTimestampGreaterThanEqualAndTipPlacanja(trenutno,
-						trenutnoMinus, "PayPal");
+				.findAllByMerchantTimestampLessThanEqualAndMerchantTimestampGreaterThanEqualAndTipPlacanjaAndStatusUplate(trenutno,
+						trenutnoMinus, "PayPal", StatusUplate.NA_OBRADI);
 		for (int i = 0; i < uplate.size(); i++) {
 			try {
 				APIContext apiContext = new APIContext(clientId, clientSecret, "sandbox");
 				Payment payment;
 				payment = Payment.get(apiContext, uplate.get(i).getBtcId());
-				
-				
-				
-				// RAZNE PROVERE
-				
-				
-				
+				if(payment.getState().equals("approved")){
+					uplate.get(i).setStatusUplate(StatusUplate.UPLACENO);
+					uplataRep.save(uplate.get(i));
+				}
 			} catch (PayPalRESTException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 		}
-	}
-
-	public String getAccessToken() {
-
-		String url = "https://api.sandbox.paypal.com/v1/oauth2/token";
-		MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-		headers.add("Content-Type", "application/json");
-		headers.add("Authorization", "Basic " + clientId + ":" + clientSecret);
-
-		ParameterizedTypeReference<Map<String, Object>> typeRef = new ParameterizedTypeReference<Map<String, Object>>() {
-		};
-		ResponseEntity<Map<String, Object>> response = restTemplate.exchange(url, HttpMethod.GET,
-				new HttpEntity<Object>(headers), typeRef);
-		JSONObject responseJSON = new JSONObject(response.getBody());
-		System.out.println(responseJSON);
-		return "safs";
 	}
 
 }
