@@ -29,7 +29,6 @@ public class Racun {
 
 	public Racun() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Racun(String brojRacuna, Casopis casopis, Banka banka) {

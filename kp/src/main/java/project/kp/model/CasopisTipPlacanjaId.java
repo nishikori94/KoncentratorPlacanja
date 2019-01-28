@@ -24,7 +24,6 @@ public class CasopisTipPlacanjaId implements Serializable {
 	
 	public CasopisTipPlacanjaId() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public CasopisTipPlacanjaId(Long casopisId, Long tipPlacanjaId) {

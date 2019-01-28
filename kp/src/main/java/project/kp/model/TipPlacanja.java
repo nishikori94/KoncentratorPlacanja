@@ -49,7 +49,6 @@ public class TipPlacanja {
 
 	public TipPlacanja() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public TipPlacanja(Long id, String naziv, String url, String imgPath) {

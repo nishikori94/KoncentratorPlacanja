@@ -51,7 +51,6 @@ public class UplataServiceImpl implements UplataService {
 
 	@Override
 	public String zavrsiUplatu(Long uplataId, RezultatTransakcije rezultatTransakcije) {
-		// TODO Auto-generated method stub
 		Uplata uplata = uplataRep.findById(uplataId).get();
 		uplata.setStatusUplate(StatusUplate.UPLACENO);
 		uplataRep.save(uplata);
@@ -61,7 +60,6 @@ public class UplataServiceImpl implements UplataService {
 
 	@Override
 	public String otkaziUplatu(Long uplataId, RezultatTransakcije rezultatTransakcije) {
-		// TODO Auto-generated method stub
 		Uplata uplata = uplataRep.findById(uplataId).get();
 		uplata.setStatusUplate(StatusUplate.ODBIJENO);
 		uplataRep.save(uplata);
