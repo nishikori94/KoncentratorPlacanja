@@ -113,7 +113,7 @@ public class PayPalServiceImpl implements PaymentInterface {
 	}
 
 	@Override
-	public void complete(HttpServletRequest request) {
+	public String complete(HttpServletRequest request) {
 		Map<String, Object> response = new HashMap<String, Object>();
 		Payment payment = new Payment();
 		payment.setId(request.getParameter("paymentId"));
@@ -134,6 +134,7 @@ public class PayPalServiceImpl implements PaymentInterface {
 			e.printStackTrace();
 		}
 		System.out.println(response.toString());
+		return "";
 	}
 
 	@Override

@@ -80,8 +80,9 @@ public class BitcoinServiceImpl implements PaymentInterface {
 	}
 
 	@Override
-	public void complete(HttpServletRequest request) {
+	public String complete(HttpServletRequest request) {
 		// TODO Auto-generated method stub
+		return "";
 	}
 
 	@Override

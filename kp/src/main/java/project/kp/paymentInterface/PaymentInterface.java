@@ -8,7 +8,7 @@ public interface PaymentInterface {
 	
 	public Map<String, Object> create(Long merchantOrderId);
 
-	public void complete(HttpServletRequest request);
+	public String complete(HttpServletRequest request);
 	
 	public void sinhronizacija();
 
